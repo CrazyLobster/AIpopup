@@ -3,7 +3,7 @@ from tkinter import messagebox
 import os
 import json
 import importlib
-
+from tkinterdnd2 import TkinterDnD, DND_FILES 
 
 class DesktopWidget:
     def __init__(self):
@@ -25,13 +25,17 @@ class DesktopWidget:
         self.recent_configs = self.load_recent_configs()
 
         # 创建主窗口
-        self.root = tk.Tk()
+        self.root = TkinterDnD.Tk()
         self.root.title("桌面挂件")
         self.root.geometry("100x100+100+100")
         self.root.overrideredirect(True)
         self.root.attributes('-topmost', True)
         self.root.attributes('-alpha', 0.9)
         self.root.config(bg="gray")
+        self.root.drop_target_register(DND_FILES)
+        self.root.dnd_bind('<<Drop>>', self.handle_drop_event)
+
+
 
         # 挂件图标
         self.icon_label = tk.Label(
@@ -51,7 +55,9 @@ class DesktopWidget:
         self.start_y = 0
 
         # 动态加载插件
-        self.plugin = self.load_plugin()
+        self.text_plugin = self.load_text_plugin()
+        self.image_plugin = self.load_image_plugin()
+
 
         # 创建右键菜单
         self.create_context_menu()
@@ -134,8 +140,8 @@ class DesktopWidget:
         if not self.is_dragging and self.plugin:
             self.plugin.show_text_window()
 
-    def load_plugin(self):
-        """加载插件"""
+    def load_text_plugin(self):
+        """加载文本插件"""
         plugin_dir = "plugins"
         plugin_name = "text_popup"
         plugin_path = os.path.join(plugin_dir, f"{plugin_name}.py")
@@ -146,6 +152,27 @@ class DesktopWidget:
 
         module = importlib.import_module(f"{plugin_dir}.{plugin_name}")
         return module.TextPopup(self.root)
+    def handle_drop_event(self, event):
+        """处理拖放事件"""
+        if self.image_plugin:
+            self.image_plugin.handle_drop(event.data)
+
+    def load_image_plugin(self):
+        """加载图片处理插件"""
+        plugin_dir = "plugins"
+        plugin_name = "image_popup"
+        plugin_path = os.path.join(plugin_dir, f"{plugin_name}.py")
+
+        if not os.path.exists(plugin_path):
+            print(f"插件文件 {plugin_path} 不存在！")
+            return None
+
+        module = importlib.import_module(f"{plugin_dir}.{plugin_name}")
+        return module.ImageHandlerPlugin(self.root)
+    def stop_drag(self, event):
+        """判断是否为单击，显示插件"""
+        if not self.is_dragging and self.text_plugin:
+            self.text_plugin.show_text_window()  
 
     def open_config_window(self):
         """配置窗口"""
