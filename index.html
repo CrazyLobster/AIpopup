@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片展示网站</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="logo">Pexels</div>
+                <ul class="nav-menu">
+                    <li><a href="#" class="active">图片</a></li>
+                    <li><a href="#">网站</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <div class="search-container">
+                    <input type="text" placeholder="搜索...">
+                    <button class="search-btn">
+                        <span class="material-icons">search</span>
+                    </button>
+                </div>
+                <button class="login-btn">加入</button>
+            </div>
+        </nav>
+        <div class="categories">
+            <a href="#" class="category-item">电脑</a>
+            <a href="#" class="category-item">网页设计</a>
+            <a href="#" class="category-item">网站</a>
+            <a href="#" class="category-item">网站开发</a>
+            <a href="#" class="category-item">网站设计</a>
+            <a href="#" class="category-item">网站背景</a>
+            <a href="#" class="category-item">商业</a>
+            <a href="#" class="category-item">数字营销</a>
+            <a href="#" class="category-item">技术</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="gallery-header">
+            <h1>网站张图片</h1>
+            <div class="gallery-controls">
+                <span class="stats">
+                    <span class="image-count">222.2千</span> 图片
+                    <span class="video-count">34.6千</span> 视频
+                    <span class="user-count">230</span> 用户
+                </span>
+                <div class="filter-options">
+                    <select class="sort-select">
+                        <option>筛选条件</option>
+                        <option>最新</option>
+                        <option>最热</option>
+                        <option>推荐</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="image-grid">
+            <!-- 图片网格将通过JavaScript动态生成 -->
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html> 
